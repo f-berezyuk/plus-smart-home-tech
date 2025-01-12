@@ -1,16 +1,13 @@
-package ru.yandex.practicum.service;
+package ru.yandex.practicum.model.sensor;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import ru.yandex.practicum.model.SensorEvent;
-import ru.yandex.practicum.model.SensorEventType;
-
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class LightSensorEventHandler extends SensorEvent {
+public class LightSensorEvent extends SensorEvent {
     private int linkQuality;
     private int luminosity;
 
