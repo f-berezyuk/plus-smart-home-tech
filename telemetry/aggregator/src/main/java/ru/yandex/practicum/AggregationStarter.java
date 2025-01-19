@@ -26,7 +26,6 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 @Component
 @RequiredArgsConstructor
 public class AggregationStarter {
-
     private final KafkaProducer<String, SensorsSnapshotAvro> producer;
     private final KafkaConsumer<String, SensorEventAvro> consumer;
     private final Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
@@ -94,20 +93,18 @@ public class AggregationStarter {
 
         SensorStateAvro oldState = snapshot.getSensorsState().get(event.getId());
         if (oldState != null
-            && !oldState.getTimestamp().isBefore(Instant.ofEpochSecond(event.getTimestamp().getEpochSecond()))
+            && !oldState.getTimestamp().isBefore(Instant.ofEpochSecond(event.getTimestamp()))
             && oldState.getData().equals(event.getPayload())) {
             return Optional.empty();
         }
 
         SensorStateAvro newState = SensorStateAvro.newBuilder()
-                .setTimestamp(Instant.ofEpochSecond(event.getTimestamp().getEpochSecond()))
+                .setTimestamp(Instant.ofEpochSecond(event.getTimestamp()))
                 .setData(event.getPayload())
                 .build();
 
         snapshot.getSensorsState().put(event.getId(), newState);
-
-        snapshot.setTimestamp(Instant.ofEpochSecond(event.getTimestamp().getEpochSecond()));
-
+        snapshot.setTimestamp(Instant.ofEpochSecond(event.getTimestamp()));
         snapshots.put(event.getHubId(), snapshot);
 
         return Optional.of(snapshot);

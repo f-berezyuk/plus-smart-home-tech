@@ -8,4 +8,3 @@ public class SensorEventDeserializer extends BaseAvroDeserializer<SensorEventAvr
         super(SensorEventAvro.getClassSchema());
     }
 }
-
