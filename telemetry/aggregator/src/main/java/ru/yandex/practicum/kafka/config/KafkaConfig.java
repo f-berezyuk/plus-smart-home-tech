@@ -53,7 +53,6 @@ public class KafkaConfig {
                     return TopicType.TELEMETRY_SNAPSHOTS;
                 }
                 default -> throw new RuntimeException("Topic type not found");
-
             }
         }
     }
