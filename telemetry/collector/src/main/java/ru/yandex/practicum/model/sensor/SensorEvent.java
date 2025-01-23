@@ -1,13 +1,13 @@
 package ru.yandex.practicum.model.sensor;
 
+import java.time.Instant;
+
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import ru.yandex.practicum.model.Event;
 
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
@@ -24,7 +24,13 @@ import ru.yandex.practicum.model.Event;
 @Getter
 @Setter
 @ToString
-public abstract class SensorEvent extends Event<SensorEventType> {
+public abstract class SensorEvent {
     @NotBlank
     private String id;
+    @Getter
+    @NotBlank
+    private String hubId;
+    private Instant timestamp = Instant.now();
+
+    public abstract SensorEventType getType();
 }
