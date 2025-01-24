@@ -26,6 +26,7 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 @Component
 @RequiredArgsConstructor
 public class AggregationStarter {
+    private static final Duration TIMEOUT = Duration.ofMillis(100);
     private final KafkaProducer<String, SensorsSnapshotAvro> producer;
     private final KafkaConsumer<String, SensorEventAvro> consumer;
     private final Map<String, SensorsSnapshotAvro> snapshots = new HashMap<>();
@@ -42,7 +43,7 @@ public class AggregationStarter {
 
             //noinspection InfiniteLoopStatement
             while (true) {
-                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(Duration.ofMillis(100));
+                ConsumerRecords<String, SensorEventAvro> records = consumer.poll(TIMEOUT);
 
                 if (records.isEmpty()) {
                     continue;
@@ -55,6 +56,9 @@ public class AggregationStarter {
                         try {
                             producer.send(new ProducerRecord<>(telemetrySnapshots, snapshot.getHubId(), snapshot),
                                     (metadata, exception) -> {
+                                        if (exception != null) {
+                                            throw new RuntimeException(exception.getMessage());
+                                        }
                                     });
                             log.info("Snapshot hubId {} -> topic {}", snapshot.getHubId(), telemetrySnapshots);
                         } catch (Exception e) {
@@ -87,24 +91,24 @@ public class AggregationStarter {
         SensorsSnapshotAvro snapshot = snapshots.getOrDefault(event.getHubId(),
                 SensorsSnapshotAvro.newBuilder()
                         .setHubId(event.getHubId())
-                        .setTimestamp(Instant.ofEpochSecond(System.currentTimeMillis()))
+                        .setTimestamp(Instant.ofEpochMilli(System.currentTimeMillis()))
                         .setSensorsState(new HashMap<>())
                         .build());
 
         SensorStateAvro oldState = snapshot.getSensorsState().get(event.getId());
         if (oldState != null
-            && !oldState.getTimestamp().isBefore(Instant.ofEpochSecond(event.getTimestamp()))
+            && !oldState.getTimestamp().isBefore(Instant.ofEpochMilli(event.getTimestamp()))
             && oldState.getData().equals(event.getPayload())) {
             return Optional.empty();
         }
 
         SensorStateAvro newState = SensorStateAvro.newBuilder()
-                .setTimestamp(Instant.ofEpochSecond(event.getTimestamp()))
+                .setTimestamp(Instant.ofEpochMilli(event.getTimestamp()))
                 .setData(event.getPayload())
                 .build();
 
         snapshot.getSensorsState().put(event.getId(), newState);
-        snapshot.setTimestamp(Instant.ofEpochSecond(event.getTimestamp()));
+        snapshot.setTimestamp(Instant.ofEpochMilli(event.getTimestamp()));
         snapshots.put(event.getHubId(), snapshot);
 
         return Optional.of(snapshot);

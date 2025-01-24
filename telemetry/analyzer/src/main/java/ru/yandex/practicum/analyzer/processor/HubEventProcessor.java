@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import ru.yandex.practicum.analyzer.kafka.AnalyzerKafkaConfig;
@@ -22,9 +21,8 @@ import ru.yandex.practicum.kafka.telemetry.event.ScenarioRemovedEventAvro;
 @Slf4j
 @Component
 public class HubEventProcessor implements Runnable {
-
+    private static final Duration TIMEOUT = Duration.ofMillis(100);
     private final KafkaConsumer<String, HubEventAvro> hubConsumer;
-
     private final SensorService sensorService;
     private final ScenarioService scenarioService;
 
@@ -43,11 +41,11 @@ public class HubEventProcessor implements Runnable {
             hubConsumer.subscribe(Collections.singletonList("telemetry.hubs.v1"));
 
             while (!Thread.currentThread().isInterrupted()) {
-                ConsumerRecords<String, HubEventAvro> records = hubConsumer.poll(Duration.ofMillis(100));
+                ConsumerRecords<String, HubEventAvro> records = hubConsumer.poll(TIMEOUT);
 
                 for (ConsumerRecord<String, HubEventAvro> record : records) {
                     try {
-                        onMessage(record);
+                        readMessage(record);
                     } catch (Exception e) {
                         log.error("Error processing event: {}", record, e);
                     }
@@ -58,8 +56,7 @@ public class HubEventProcessor implements Runnable {
         }
     }
 
-    @KafkaListener(topics = "telemetry.hubs.v1", groupId = "analyzer-hub-group")
-    public void onMessage(ConsumerRecord<String, HubEventAvro> record) {
+    public void readMessage(ConsumerRecord<String, HubEventAvro> record) {
         HubEventAvro event = record.value();
 
         var eventPayload = event.getPayload();
