@@ -1,4 +1,4 @@
-package ru.yandex.practicum.analyzer.repository.entity;
+package ru.yandex.practicum.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,12 +18,12 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "actions")
+@Table(name = "conditions")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Action {
+public class Condition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,11 @@ public class Action {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private ActionType type;
+    private ConditionType type;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "operation", nullable = false)
+    private ConditionOperation operation;
 
     @Column(name = "value")
     private Integer value;

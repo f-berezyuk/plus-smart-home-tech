@@ -1,4 +1,4 @@
-package ru.yandex.practicum.analyzer.service;
+package ru.yandex.practicum.service;
 
 import java.util.List;
 
@@ -6,11 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import ru.yandex.practicum.analyzer.client.HubRouterClient;
-import ru.yandex.practicum.analyzer.repository.entity.Action;
-import ru.yandex.practicum.analyzer.repository.entity.Condition;
-import ru.yandex.practicum.analyzer.repository.entity.ConditionOperation;
-import ru.yandex.practicum.analyzer.repository.entity.Scenario;
+import ru.yandex.practicum.client.HubRouterClient;
 import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
 import ru.yandex.practicum.kafka.telemetry.event.LightSensorAvro;
 import ru.yandex.practicum.kafka.telemetry.event.MotionSensorAvro;
@@ -18,7 +14,12 @@ import ru.yandex.practicum.kafka.telemetry.event.SensorStateAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
 import ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro;
 import ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro;
+import ru.yandex.practicum.repository.entity.Action;
+import ru.yandex.practicum.repository.entity.Condition;
+import ru.yandex.practicum.repository.entity.ConditionOperation;
+import ru.yandex.practicum.repository.entity.Scenario;
 
+@SuppressWarnings("unused")
 @Service
 @RequiredArgsConstructor
 @Slf4j

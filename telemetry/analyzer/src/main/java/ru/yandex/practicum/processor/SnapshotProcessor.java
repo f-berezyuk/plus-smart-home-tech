@@ -1,4 +1,4 @@
-package ru.yandex.practicum.analyzer.processor;
+package ru.yandex.practicum.processor;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -9,9 +9,9 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.stereotype.Component;
 
-import ru.yandex.practicum.analyzer.kafka.AnalyzerKafkaConfig;
-import ru.yandex.practicum.analyzer.service.SnapshotService;
+import ru.yandex.practicum.kafka.AnalyzerKafkaConfig;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
+import ru.yandex.practicum.service.SnapshotService;
 
 @Slf4j
 @Component

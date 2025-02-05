@@ -1,4 +1,4 @@
-package ru.yandex.practicum.analyzer.client;
+package ru.yandex.practicum.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -7,13 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import ru.yandex.practicum.analyzer.repository.entity.Action;
 import ru.yandex.practicum.grpc.telemetry.event.ActionTypeProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionProto;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionRequest;
 import ru.yandex.practicum.grpc.telemetry.hubrouter.HubRouterControllerGrpc;
+import ru.yandex.practicum.repository.entity.Action;
 
 
+@SuppressWarnings("ResultOfMethodCallIgnored")
 @Slf4j
 @Service
 public class HubRouterClient {

@@ -21,7 +21,9 @@ analyzer:
       "key.deserializer": org.apache.kafka.common.serialization.StringDeserializer
       "value.deserializer": ru.yandex.practicum.deserializer.SensorSnapshotDeserializer
     topics:
+      # noinspection SpringYamlInspection
       hubs-events: telemetry.hubs.v1
+      # noinspection SpringYamlInspection
       sensors-snapshot: telemetry.snapshots.v1
 grpc:
   client:
