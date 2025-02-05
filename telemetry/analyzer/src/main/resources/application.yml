@@ -6,13 +6,8 @@ spring:
     url: jdbc:postgresql://localhost:5433/analyzer-db
     username: analyzer
     password: analyzer
-jpa:
-  properties:
-    hibernate:
-      dialect=org:
-        hibernate:
-          dialect:
-            PostgreSQLDialect:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 analyzer:
   kafka:
     hub-consumer-properties:
@@ -24,7 +19,7 @@ analyzer:
       "bootstrap.servers": localhost:9092
       "group.id": analyzer-snapshot-group
       "key.deserializer": org.apache.kafka.common.serialization.StringDeserializer
-      "value.deserializer": deserializer.SensorSnapshotDeserializer
+      "value.deserializer": ru.yandex.practicum.deserializer.SensorSnapshotDeserializer
     topics:
       hubs-events: telemetry.hubs.v1
       sensors-snapshot: telemetry.snapshots.v1
