@@ -51,7 +51,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             throw new SpecifiedProductAlreadyInWarehouseException("Product already exist");
         }
 
-        ProductDto productDto = shoppingStoreClient.getProduct(request.getProductId());
+        ProductDto productDto = shoppingStoreClient.findProductById(String.valueOf(request.getProductId()));
         if (productDto == null) {
             throw new RuntimeException("product not found");
         }
@@ -99,7 +99,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             warehouseProductRepository.save(product);
 
             QuantityState newState = determineState(product.getQuantityAvailable());
-            shoppingStoreClient.setProductQuantityState(
+            shoppingStoreClient.setQuantity(
                     SetProductQuantityStateRequest.builder()
                             .productId(productId)
                             .quantityState(newState)
@@ -154,7 +154,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         WarehouseProduct updatedProduct = warehouseProductRepository.save(product);
 
         QuantityState newState = determineState(updatedProduct.getQuantityAvailable());
-        shoppingStoreClient.setProductQuantityState(
+        shoppingStoreClient.setQuantity(
                 SetProductQuantityStateRequest.builder()
                         .productId(request.getProductId())
                         .quantityState(newState)

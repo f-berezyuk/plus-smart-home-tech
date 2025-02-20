@@ -2,7 +2,6 @@ package ru.yandex.practicum.warehouse.mapper;
 
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import ru.yandex.practicum.warehouse.dto.NewProductInWarehouseRequest;

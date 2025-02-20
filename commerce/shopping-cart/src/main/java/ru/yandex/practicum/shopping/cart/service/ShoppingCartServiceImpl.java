@@ -9,14 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.yandex.practicum.shopping.cart.dto.ChangeProductQuantityRequest;
+import ru.yandex.practicum.shopping.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.shopping.cart.entity.ShoppingCart;
 import ru.yandex.practicum.shopping.cart.exception.NoProductsInShoppingCartException;
 import ru.yandex.practicum.shopping.cart.exception.NotAuthorizedUserException;
 import ru.yandex.practicum.shopping.cart.exception.ProductNotAvailableException;
 import ru.yandex.practicum.shopping.cart.mapper.ShoppingCartMapper;
 import ru.yandex.practicum.shopping.cart.repository.ShoppingCartRepository;
-import ru.yandex.practicum.shopping.cart.dto.ChangeProductQuantityRequest;
-import ru.yandex.practicum.shopping.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.shopping.store.dto.ProductDto;
 import ru.yandex.practicum.shopping.store.enums.ProductState;
 import ru.yandex.practicum.shopping.store.enums.QuantityState;
@@ -173,7 +173,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     private void checkProductQuantityState(UUID productId, int quantity) {
-        ProductDto productDto = shoppingStoreClient.getProduct(productId);
+        ProductDto productDto = shoppingStoreClient.findProductById(String.valueOf(productId));
         if (productDto == null || productDto.getProductState() != ProductState.ACTIVE) {
             throw new ProductNotAvailableException("product not available: " + productId);
         }
