@@ -1,4 +1,4 @@
-package ru.yandex.practicum.commerce.feign;
+package ru.yandex.practicum.common;
 
 import feign.Feign;
 import org.springframework.context.annotation.Bean;

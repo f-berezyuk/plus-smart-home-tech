@@ -10,9 +10,6 @@ import ru.yandex.practicum.shopping.cart.dto.ShoppingCartDto;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface ShoppingCartMapper {
-    @Mapping(target = "username", ignore = true)
-    @Mapping(target = "active", ignore = true)
-    ShoppingCart toShoppingCart(final ShoppingCartDto productDto);
-
-    ShoppingCartDto toShoppingCartDto(final ShoppingCart product);
+    @Mapping(target = "shoppingCartId", source = "shoppingCartId")
+    ShoppingCartDto toShoppingCartDto(ShoppingCart shoppingCart);
 }

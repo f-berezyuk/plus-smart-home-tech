@@ -1,4 +1,4 @@
-package ru.yandex.practicum.commerce.feign;
+package ru.yandex.practicum.common;
 
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -26,4 +26,3 @@ public class CustomErrorDecoder implements ErrorDecoder {
         };
     }
 }
-
