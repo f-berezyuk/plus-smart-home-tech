@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class BookedProductsDto {
-    private double deliveryWeight;
-    private double deliveryVolume;
-    private boolean fragile;
+    private Double deliveryWeight;
+    private Double deliveryVolume;
+    private Boolean fragile;
 }
