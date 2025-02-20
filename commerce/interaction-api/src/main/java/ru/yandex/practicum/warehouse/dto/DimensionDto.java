@@ -1,4 +1,4 @@
-package ru.yandex.practicum.shopping.warehouse.dto;
+package ru.yandex.practicum.warehouse.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
