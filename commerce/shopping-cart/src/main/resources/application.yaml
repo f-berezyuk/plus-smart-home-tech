@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: shopping-cart
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      fail-fast: true
+      retry:
+        use-random-policy: true
+        max-interval: 6000
+  eureka:
+    client:
+      serviceUrl:
+        default-zone: http://${eureka.instance.hostname:localhost}:${eureka.instance.port:8761}/eureka/
+server:
+  port: 0
+resilience4j.circuitbreaker:
+  instances:
+    shopping-cart:
+      sliding-window-size: 10
+      failure-rate-threshold: 50
+      wait-duration-in-open-state: 10000 # 10 секунд в миллисекундах
+      permitted-number-of-calls-in-half-open-state: 3
+      sliding-window-type: COUNT_BASED
+      minimum-number-of-calls: 5
+      automatic-transition-from-open-to-half-open-enabled: true
