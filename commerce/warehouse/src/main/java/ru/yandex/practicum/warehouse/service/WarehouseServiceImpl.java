@@ -44,6 +44,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     private final BookingMapper bookingMapper;
 
     @Override
+    @Transactional
     public void addNewProduct(NewProductInWarehouseRequest request) {
         log.info("addNewProduct {}", request);
 
