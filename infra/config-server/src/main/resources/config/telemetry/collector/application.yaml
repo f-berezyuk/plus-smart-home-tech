@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: collector
+
+server:
+  port: 0
+
+logging:
+  level:
+    ru.yandex.practicum: DEBUG
+
+collector:
+  kafka:
+    producer:
+      properties:
+        "bootstrap.servers": localhost:9092
+        "client.id": "telemetry.collection"
+        "key.serializer": org.apache.kafka.common.serialization.StringSerializer
+        "value.serializer": ru.yandex.practicum.kafka.GeneralAvroSerializer
+      topics:
+        # noinspection SpringYamlInspection
+        sensor-events: telemetry.sensor.v1
+        # noinspection SpringYamlInspection
+        hubs-events: telemetry.hubs.v1
+
+grpc:
+  client:
+    collector:
+      address: 'static://127.0.0.1:9091'
+      enable-keep-alive: true
+      keep-alive-without-calls: true
+      negotiation-type: plaintext
