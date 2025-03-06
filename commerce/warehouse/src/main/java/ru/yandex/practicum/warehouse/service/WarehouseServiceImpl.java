@@ -8,13 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.yandex.practicum.common.dto.AddressDto;
 import ru.yandex.practicum.shopping.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.shopping.store.dto.ProductDto;
 import ru.yandex.practicum.shopping.store.dto.SetProductQuantityStateRequest;
 import ru.yandex.practicum.shopping.store.enums.QuantityState;
 import ru.yandex.practicum.shopping.store.feign.ShoppingStoreClient;
 import ru.yandex.practicum.warehouse.dto.AddProductToWarehouseRequest;
-import ru.yandex.practicum.common.dto.AddressDto;
 import ru.yandex.practicum.warehouse.dto.AssemblyProductForOrderFromShoppingCartRequest;
 import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
 import ru.yandex.practicum.warehouse.dto.NewProductInWarehouseRequest;
@@ -34,7 +34,6 @@ import static ru.yandex.practicum.common.dto.AddressDto.getDefaultAddress;
 @RequiredArgsConstructor
 @Slf4j
 public class WarehouseServiceImpl implements WarehouseService {
-
     private static final int LIMIT_COUNT = 5;
     private static final int ENOUGH_COUNT = 20;
     private final WarehouseRepository warehouseProductRepository;
