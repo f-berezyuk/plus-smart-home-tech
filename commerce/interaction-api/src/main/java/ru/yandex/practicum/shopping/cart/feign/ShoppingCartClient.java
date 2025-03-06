@@ -20,25 +20,25 @@ import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
         path = "/api/v1/shopping-cart",
         fallback = ShoppingCartClientFallback.class)
 public interface ShoppingCartClient {
-    @GetMapping("/api/v1/shopping-cart")
+    @GetMapping
     ShoppingCartDto findShoppingCart(@RequestParam(required = false) String username,
                                      @RequestParam(required = false) String shoppingCartId) throws UnavailableException;
 
-    @PutMapping("/api/v1/shopping-cart")
+    @PutMapping
     ShoppingCartDto saveShoppingCart(@RequestParam String username,
                                      @RequestBody Map<String, Integer> products) throws UnavailableException;
 
-    @DeleteMapping("/api/v1/shopping-cart")
+    @DeleteMapping
     void deleteShoppingCart(@RequestParam String username) throws UnavailableException;
 
-    @PostMapping("/api/v1/shopping-cart/remove")
+    @PostMapping("/remove")
     ShoppingCartDto updateShoppingCart(@RequestParam String username,
                                        @RequestBody List<String> products) throws UnavailableException;
 
-    @PostMapping("/api/v1/shopping-cart/change-quantity")
+    @PostMapping("/change-quantity")
     ShoppingCartDto changeProductQuantity(@RequestParam String username,
                                           @RequestBody ChangeProductQuantityRequest quantity) throws UnavailableException;
 
-    @PostMapping("/api/v1/shopping-cart/booking")
+    @PostMapping("/booking")
     BookedProductsDto bookingProducts(@RequestParam String username) throws UnavailableException;
 }

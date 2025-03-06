@@ -1,4 +1,4 @@
-package ru.yandex.practicum.shopping.cart.exception;
+package ru.yandex.practicum.common.exception;
 
 import java.util.List;
 

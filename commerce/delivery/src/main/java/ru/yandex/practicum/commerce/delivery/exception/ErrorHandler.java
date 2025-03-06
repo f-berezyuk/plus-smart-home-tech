@@ -1,4 +1,4 @@
-package ru.yandex.practicum.shopping.cart.exception;
+package ru.yandex.practicum.commerce.delivery.exception;
 
 import java.util.List;
 
@@ -14,28 +14,17 @@ import ru.yandex.practicum.common.exception.ErrorResponse;
 @RestControllerAdvice
 @Slf4j
 public class ErrorHandler {
-    @ExceptionHandler(NoProductsInShoppingCartException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleNotAuthorizedUserException(NoProductsInShoppingCartException ex) {
-        return errorResponse(HttpStatus.BAD_REQUEST, "Корзина пуста", ex);
-    }
 
-    @ExceptionHandler(NotAuthorizedUserException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ErrorResponse handleNotAuthorizedUserException(NotAuthorizedUserException ex) {
-        return errorResponse(HttpStatus.UNAUTHORIZED, "unauthorized user", ex);
-    }
-
-    @ExceptionHandler(ProductNotAvailableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleProductNotAvailableException(ProductNotAvailableException ex) {
-        return errorResponse(HttpStatus.BAD_REQUEST, "product unavailable", ex);
-    }
-
-    @ExceptionHandler(CartNotFoundException.class)
+    @ExceptionHandler(NoDeliveryFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleCartNotFoundException(CartNotFoundException ex) {
-        return errorResponse(HttpStatus.NOT_FOUND, "cart not found", ex);
+    public ErrorResponse handleNoDeliveryFoundException(NoDeliveryFoundException ex) {
+        return errorResponse(HttpStatus.NOT_FOUND, "Не найдена доставка для расчёта", ex);
+    }
+
+    @ExceptionHandler(NoOrderFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleNoOrderFoundException(NoOrderFoundException ex) {
+        return errorResponse(HttpStatus.NOT_FOUND, "Не найден заказ", ex);
     }
 
     @ExceptionHandler(InternalServerErrorException.class)
@@ -45,7 +34,6 @@ public class ErrorHandler {
     }
 
     private ErrorResponse errorResponse(HttpStatus status, String userMessage, Throwable ex) {
-
         return new ErrorResponse(
                 ex.getCause(),
                 List.of(ex.getStackTrace()),

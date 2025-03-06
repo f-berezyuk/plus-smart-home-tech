@@ -14,7 +14,7 @@ import ru.yandex.practicum.shopping.store.dto.SetProductQuantityStateRequest;
 import ru.yandex.practicum.shopping.store.enums.QuantityState;
 import ru.yandex.practicum.shopping.store.feign.ShoppingStoreClient;
 import ru.yandex.practicum.warehouse.dto.AddProductToWarehouseRequest;
-import ru.yandex.practicum.warehouse.dto.AddressDto;
+import ru.yandex.practicum.common.dto.AddressDto;
 import ru.yandex.practicum.warehouse.dto.AssemblyProductForOrderFromShoppingCartRequest;
 import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
 import ru.yandex.practicum.warehouse.dto.NewProductInWarehouseRequest;
@@ -28,7 +28,7 @@ import ru.yandex.practicum.warehouse.mapper.WarehouseMapper;
 import ru.yandex.practicum.warehouse.repository.BookingRepository;
 import ru.yandex.practicum.warehouse.repository.WarehouseRepository;
 
-import static ru.yandex.practicum.warehouse.dto.AddressDto.getDefaultAddress;
+import static ru.yandex.practicum.common.dto.AddressDto.getDefaultAddress;
 
 @Service
 @RequiredArgsConstructor

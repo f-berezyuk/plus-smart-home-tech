@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.yandex.practicum.shopping.cart.dto.ShoppingCartDto;
 import ru.yandex.practicum.warehouse.dto.AddProductToWarehouseRequest;
-import ru.yandex.practicum.warehouse.dto.AddressDto;
+import ru.yandex.practicum.common.dto.AddressDto;
 import ru.yandex.practicum.warehouse.dto.AssemblyProductForOrderFromShoppingCartRequest;
 import ru.yandex.practicum.warehouse.dto.BookedProductsDto;
 import ru.yandex.practicum.warehouse.dto.NewProductInWarehouseRequest;
