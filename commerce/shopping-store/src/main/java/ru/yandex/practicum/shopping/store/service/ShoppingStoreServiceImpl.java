@@ -2,6 +2,8 @@ package ru.yandex.practicum.shopping.store.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,7 @@ import ru.yandex.practicum.shopping.store.exception.ProductNotFoundException;
 import ru.yandex.practicum.shopping.store.mapper.ProductMapper;
 import ru.yandex.practicum.shopping.store.repository.ProductRepository;
 
+@SuppressWarnings("ALL")
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -104,6 +107,13 @@ public class ShoppingStoreServiceImpl implements ShoppingStoreService {
                 });
 
         return productMapper.toProductDto(product);
+    }
+
+    @Override
+    public Map<UUID, ProductDto> findAllByIds(Set<UUID> productIds) {
+        return productRepository.findAllById(productIds)
+                .stream()
+                .collect(Collectors.toMap(Product::getProductId, productMapper::toProductDto));
     }
 
     private void updateProductFields(Product product, ProductDto productDto) {

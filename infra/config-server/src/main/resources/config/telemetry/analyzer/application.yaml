@@ -3,7 +3,7 @@ spring:
     name: analyzer
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/analyzer-db
+    url: jdbc:postgresql://localhost:5432/analyzer-db
     username: analyzer
     password: analyzer
   jpa:

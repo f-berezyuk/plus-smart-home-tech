@@ -1,6 +1,8 @@
 package ru.yandex.practicum.shopping.store.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.validation.Valid;
@@ -55,5 +57,10 @@ public class ShoppingStoreController {
     @GetMapping("/{productId}")
     ProductDto getProduct(@PathVariable("productId") UUID productId) {
         return shoppingStoreService.getProduct(productId);
+    }
+
+    @GetMapping("/allBy")
+    Map<UUID, ProductDto> findAllByIds(@RequestParam("ids[]") Set<UUID> ids) {
+        return shoppingStoreService.findAllByIds(ids);
     }
 }
