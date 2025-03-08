@@ -1,6 +1,9 @@
 package ru.yandex.practicum.shopping.store.feign;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
@@ -16,6 +19,11 @@ public class ShoppingStoreFallback implements ShoppingStoreClient {
     public PageableDto findAllProducts(ProductCategory category, Integer page, Integer size, List<String> sort,
                                        String sortOrder) {
         throw new ServerUnavailableException("Endpoint /api/v1/shopping-store method GET is unavailable");
+    }
+
+    @Override
+    public Map<UUID, ProductDto> findAllByIds(Set<UUID> productIds) {
+        throw new ServerUnavailableException("Endpoint /api/v1/shopping-store/allBy method POST is unavailable");
     }
 
     @Override

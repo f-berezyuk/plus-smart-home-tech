@@ -1,6 +1,8 @@
 package ru.yandex.practicum.shopping.store.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import ru.yandex.practicum.shopping.store.dto.PageableDto;
@@ -21,4 +23,6 @@ public interface ShoppingStoreService {
     boolean setProductQuantityState(SetProductQuantityStateRequest request);
 
     ProductDto getProduct(UUID productId);
+
+    Map<UUID, ProductDto> findAllByIds(Set<UUID> productIds);
 }

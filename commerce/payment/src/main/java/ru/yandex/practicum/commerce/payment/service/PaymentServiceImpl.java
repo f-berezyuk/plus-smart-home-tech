@@ -17,8 +17,10 @@ import ru.yandex.practicum.order.dto.OrderDto;
 import ru.yandex.practicum.order.feign.OrderClient;
 import ru.yandex.practicum.payment.dto.PaymentDto;
 import ru.yandex.practicum.payment.enums.PaymentState;
+import ru.yandex.practicum.shopping.store.dto.ProductDto;
 import ru.yandex.practicum.shopping.store.feign.ShoppingStoreClient;
 
+@SuppressWarnings("CallBeanMethodFromSomeClass")
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -33,12 +35,15 @@ public class PaymentServiceImpl implements PaymentService {
     @Transactional(readOnly = true)
     public BigDecimal productCost(OrderDto orderDto) {
         BigDecimal total = BigDecimal.ZERO;
-
-        for (Map.Entry<UUID, Integer> entry : orderDto.getProducts().entrySet()) {
+        Map<UUID, Integer> products = orderDto.getProducts();
+        Map<UUID, ProductDto> productsDto = shoppingStoreClient.findAllByIds(products.keySet());
+        for (Map.Entry<UUID, Integer> entry : products.entrySet()) {
             UUID productId = entry.getKey();
             Integer quantity = entry.getValue();
 
-            BigDecimal productPrice = shoppingStoreClient.findProductById(String.valueOf(productId)).getPrice();
+            BigDecimal productPrice = productsDto.getOrDefault(productId,
+                            ProductDto.builder().price(BigDecimal.ZERO).build())
+                    .getPrice();
 
             BigDecimal lineTotal = productPrice.multiply(BigDecimal.valueOf(quantity));
             total = total.add(lineTotal);

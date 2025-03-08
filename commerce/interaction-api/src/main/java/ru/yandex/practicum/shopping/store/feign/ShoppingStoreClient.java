@@ -1,6 +1,9 @@
 package ru.yandex.practicum.shopping.store.feign;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -24,6 +27,9 @@ public interface ShoppingStoreClient {
                                 @RequestParam(defaultValue = "1") Integer size,
                                 @RequestParam(required = false) List<String> sort,
                                 @RequestParam(defaultValue = "ASC") String sortOrder);
+
+    @PostMapping("/allBy")
+    Map<UUID, ProductDto> findAllByIds(@RequestParam Set<UUID> ids);
 
     @PostMapping()
     ProductDto updateProduct(@RequestBody @Valid ProductDto productDto);
